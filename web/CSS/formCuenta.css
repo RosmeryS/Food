@@ -1,0 +1,34 @@
+.main-body{
+    display: flex;
+    align-items: center;
+    padding: 0% 2% 2% 2%;
+}
+.titulo{
+    text-align: center;
+    width: 90%;
+    background-color: white;
+    padding: 2% 0%;
+}
+.divBtnCrear{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.btnCrear{
+    width: 30%;
+}
+.icons{
+    color: green;
+}
+h3{
+    text-align: center;
+    color: green;
+}
+.anuncio{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.anuncioInterno{
+    padding: 10%;
+}
