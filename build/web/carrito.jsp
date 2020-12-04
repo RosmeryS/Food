@@ -73,16 +73,20 @@
         const xhr = new XMLHttpRequest()
 
         xhr.onload = function () {
-            let tabla = document.getElementById("tabla")
-            let succesCard = document.getElementById("succesCard")
-            
             tabla.style = "display: none"
-            succesCard.style = "display: block"
+        }
+        
+        xhr.onreadystatechange = function(){
+            if(xhr.status == 200 && xhr.readyState == 4){
+                let tabla = document.getElementById("tabla")
+                let succesCard = document.getElementById("succesCard")
+                succesCard.style = "display: block"
+            }
         }
 
         let values = comidasArray.comidas
                 .map(item => {
-                    return 'idcomidas=' + item.id + '&cantidades=' + item.cantidad
+                    return 'idcomidas=' + item.id + '&cantidades=' + item.cantidad + '&precios=' + item.precio + '&subtotales=' + (item.cantidad * item.precio)
                 })
                 .join('&')
         

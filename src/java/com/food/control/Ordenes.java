@@ -2,6 +2,7 @@ package com.food.control;
 
 import com.food.conexion.Conexion;
 import com.food.conexion.ConexionPool;
+import com.food.entidad.DetalleOrden;
 import com.food.operaciones.Operaciones;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -43,6 +44,8 @@ public class Ordenes extends HttpServlet {
             Conexion conn = new ConexionPool();
             conn.conectar();
             Operaciones.abrirConexion(conn);
+            
+            Operaciones.commit();
         }catch(Exception ex){
             try {
                 Operaciones.rollback();
@@ -61,28 +64,46 @@ public class Ordenes extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String idorden = request.getParameter("idorden");
         String[] idcomidas = request.getParameterValues("idcomidas");
         String[] cantidades = request.getParameterValues("cantidades");
+        String[] precios = request.getParameterValues("precios");
+        String[] subtotales = request.getParameterValues("subtotales");
         String formaPago = request.getParameter("formaPago");
         String total = request.getParameter("total");
         
-        com.food.entidad.Ordenes v = new com.food.entidad.Ordenes();
-        com.food.entidad.Usuarios u = (com.food.entidad.Usuarios)request.getSession().getAttribute("Usuario");
-        v.setIdUsuario(u.getIdUsuario());
-        v.setFormaPago(formaPago);
-        v.setEstado("Pendiente");
-        v.setFechaOrden(new Date());
-        v.setSubtotal(new BigDecimal(total));
-        v.setDescuentos(BigDecimal.ZERO);
-        v.setTotal(new BigDecimal(total));
-        
-        try{
+        try{        
+            com.food.entidad.Ordenes v = new com.food.entidad.Ordenes();
+            String u = request.getSession().getAttribute("Usuario") != null ? request.getSession().getAttribute("Usuario").toString() : "";
+            v.setIdUsuario(u);
+            v.setFormaPago(formaPago);
+            v.setEstado("Pendiente");
+            v.setFechaOrden(new Date());
+            v.setSubtotal(new BigDecimal(total));
+            v.setDescuentos(BigDecimal.ZERO);
+            v.setTotal(new BigDecimal(total));
+            
             Conexion conn = new ConexionPool();
             conn.conectar();
             Operaciones.abrirConexion(conn);
             Operaciones.iniciarTransaccion();
             
-            v = Operaciones.insertar(v);
+            if(idorden != null && idorden != ""){
+                
+            }else{
+                v = Operaciones.insertar(v);
+                
+                for(int i=0; i<idcomidas.length; i++){
+                    DetalleOrden d = new DetalleOrden();
+                    d.setIdorden(v.getIdOrden());
+                    d.setIdmenu(Integer.parseInt(idcomidas[i]));
+                    d.setCantidad(Integer.parseInt(cantidades[i]));
+                    d.setPrecio(new BigDecimal(precios[i]));
+                    d.setSubtotal(new BigDecimal(subtotales[i]));
+                    
+                    d = Operaciones.insertar(d);
+                }
+            }
             
             Operaciones.commit();
         }catch(Exception ex){
