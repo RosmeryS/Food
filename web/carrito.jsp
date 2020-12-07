@@ -13,7 +13,7 @@
                 </select>
             </div>
             <div class="col-2">
-                <a class="btn btn-primary mb-3" href="javascript:void(0);" onclick="sendData();">Confirmar orden</a>
+                <a class="btn btn-primary mb-3" href="javascript:void(0);" id="sendData" onclick="sendData();">Confirmar orden</a>
             </div>
         </div>
         <table class="table table-hover" id="tablaOrdenes">
@@ -41,6 +41,7 @@
 <script>
     const tabla_body = document.getElementById("tablaOrdenes").querySelector("tbody")
     const tabla_foot = document.getElementById("tablaOrdenes").querySelector("tfoot")
+    let sendDataButton = document.getElementById('sendData')
 
     const optionsFormat = {style: 'currency', currency: 'USD'};
     const numberFormat = new Intl.NumberFormat('en-US', optionsFormat);
@@ -49,22 +50,37 @@
 
     function updateTable() {
         let comidasArray = JSON.parse(localStorage.getItem("comidasArray"))
-        tabla_body.innerHTML = ''
-        comidasArray.comidas.forEach(item => {
-            tabla_body.innerHTML +=
-                    "<tr>" +
-                    "<td><img style='height:60px; width: 60px; object-fit: cover; object-position:center;' src='" + item.imagen_url + "'></td>" +
-                    "<td>" + item.menu + "<br>" + item.descripcion + "</td>" +
-                    "<td>" + numberFormat.format(item.precio) + "</td>" +
-                    "<td>" + item.cantidad + "</td>" +
-                    "<td>" + (numberFormat.format(item.precio * item.cantidad)) + "</td>" +
-                    "</tr>"
-        })
+        
+        if(comidasArray == null) {
+            if(sessionStorage.getItem('isOrdered') === null){
+                sendDataButton.style = 'display: none'
+                tabla_body.innerHTML = '<tr><td colspan="5">No hay datos</td></tr>'
+            }else{                
+                let tabla = document.getElementById("tabla")
+                tabla.style = 'display: none'
+                let succesCard = document.getElementById("succesCard")
+                succesCard.style = "display: block"
+            }
+        } else {
+            sendDataButton.style = ''
+        
+            tabla_body.innerHTML = ''
+            comidasArray.comidas.forEach(item => {
+                tabla_body.innerHTML +=
+                        "<tr>" +
+                        "<td><img style='height:60px; width: 60px; object-fit: cover; object-position:center;' src='" + item.imagen_url + "'></td>" +
+                        "<td>" + item.menu + "<br>" + item.descripcion + "</td>" +
+                        "<td>" + numberFormat.format(item.precio) + "</td>" +
+                        "<td>" + item.cantidad + "</td>" +
+                        "<td>" + (numberFormat.format(item.precio * item.cantidad)) + "</td>" +
+                        "</tr>"
+            })
 
-        let total = comidasArray.comidas.reduce((total, item) => {
-            return total += (item.precio * item.cantidad)
-        }, 0)
-        tabla_foot.innerHTML = "<tr><th colspan='3'></th><th>Total</th><th>" + numberFormat.format(total) + "</th><tr>"
+            let total = comidasArray.comidas.reduce((total, item) => {
+                return total += (item.precio * item.cantidad)
+            }, 0)
+            tabla_foot.innerHTML = "<tr><th colspan='3'></th><th>Total</th><th>" + numberFormat.format(total) + "</th><tr>"
+    }
     }
 
     function sendData() {
@@ -79,8 +95,11 @@
         xhr.onreadystatechange = function(){
             if(xhr.status == 200 && xhr.readyState == 4){
                 let tabla = document.getElementById("tabla")
+                tabla.style = 'display: none'
                 let succesCard = document.getElementById("succesCard")
                 succesCard.style = "display: block"
+                
+                sessionStorage.setItem('isOrdered', 1)
             }
         }
 
@@ -96,6 +115,8 @@
         xhr.open('POST', '${pageContext.servletContext.contextPath}/Ordenes')
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
         xhr.send(values+'&formaPago='+formaPago.value+"&total="+total)
+        
+        localStorage.removeItem('comidasArray')
     }
 </script>
 <%@include file="_down.jsp" %>

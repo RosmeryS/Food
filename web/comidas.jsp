@@ -32,32 +32,36 @@
 </div>
 <script>
     function addToCart(id, menu, precio, descripcion, imagen_url){
-        let comida = {
-            "id": id,
-            "menu": menu,
-            "precio": parseFloat(precio),
-            "descripcion": descripcion,
-            "imagen_url": imagen_url
-        }
-        let arr = localStorage.getItem("comidasArray")
-        if(arr != null){
-            let comidasArray = JSON.parse(localStorage.getItem("comidasArray"))
-            let found = comidasArray.comidas.find(i => i.id === comida.id)
-            if(found === undefined){
+        if(sessionStorage.getItem('isOrdered') == null){
+            let comida = {
+                "id": id,
+                "menu": menu,
+                "precio": parseFloat(precio),
+                "descripcion": descripcion,
+                "imagen_url": imagen_url
+            }
+            let arr = localStorage.getItem("comidasArray")
+            if(arr != null){
+                let comidasArray = JSON.parse(localStorage.getItem("comidasArray"))
+                let found = comidasArray.comidas.find(i => i.id === comida.id)
+                if(found === undefined){
+                    comida["cantidad"] = 1
+                }else{                 
+                    comida["cantidad"] = found.cantidad + 1
+                    comidasArray["comidas"] = comidasArray.comidas.filter(i => i.id !== comida.id)
+                }
+                comidasArray.comidas.push(comida)
+                localStorage.setItem("comidasArray", JSON.stringify(comidasArray))
+            }else{
                 comida["cantidad"] = 1
-            }else{                 
-                comida["cantidad"] = found.cantidad + 1
-                comidasArray["comidas"] = comidasArray.comidas.filter(i => i.id !== comida.id)
+                let comidasArray = {
+                    "comidas": [comida]
+                }
+                let stringified = JSON.stringify(comidasArray)
+                localStorage.setItem("comidasArray", JSON.stringify(comidasArray))
             }
-            comidasArray.comidas.push(comida)
-            localStorage.setItem("comidasArray", JSON.stringify(comidasArray))
         }else{
-            comida["cantidad"] = 1
-            let comidasArray = {
-                "comidas": [comida]
-            }
-            let stringified = JSON.stringify(comidasArray)
-            localStorage.setItem("comidasArray", JSON.stringify(comidasArray))
+            alert('Usted ya confirmó una orden, le agradeceremos su paciencia')
         }
     }
 </script>
