@@ -10,15 +10,15 @@
         </div>
         <div class="form-group">
             <label for="menu">Menú</label>
-            <input class="form-control" id="menu" name="menu" value="${valor.menu}" type="text">
+            <input placeholder="Crepas de Fresa" class="form-control" id="menu" name="menu" value="${valor.menu}" type="text">
         </div>
         <div class="form-group">
             <label for="precio">Precio</label>
-            <input class="form-control" id="precio" name="precio" value="${valor.precio}" type="text">
+            <input placeholder="0.00" class="form-control" id="precio" name="precio" value="${valor.precio}" type="text">
         </div>
         <div class="form-group">
             <label for="descripcion">Descripción</label>
-            <textarea class="form-control" id="descripcion" name="descripcion">${valor.descripcion}</textarea>
+            <textarea placeholder="Descripcion del Menu que desea ordenar" class="form-control" id="descripcion" name="descripcion">${valor.descripcion}</textarea>
         </div>
         <div class="form-group">
             <label for="imagen_url">URL</label>
