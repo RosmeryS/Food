@@ -44,16 +44,6 @@ public class Reportes extends HttpServlet {
         
         String accion = request.getParameter("accion") != null ? request.getParameter("accion") : "";
         
-        String servlet = "/Reportes";
-        String servlet_name = "reportes";
-        String sql = "";
-        String rs[][];
-        String cabeceras[];
-        List<Object> params = new ArrayList();
-        
-        request.setAttribute("servlet", servlet);
-        request.setAttribute("servlet_name", servlet_name);
-        
         try{
             Conexion conn = new ConexionPool();
             conn.conectar();
@@ -96,7 +86,7 @@ public class Reportes extends HttpServlet {
             try {
                 Operaciones.rollback();
                 request.getSession().setAttribute("resultado", 0);
-                response.sendRedirect(servlet);
+                response.sendRedirect("Ordenes");
             } catch (SQLException ex1) {
                 Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex1);
             }

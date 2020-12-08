@@ -34,7 +34,7 @@
         <div class="card-body">
             <h5 class="card-title">Su orden se registró correctamente</h5>
             <p class="card-text">En estos momentos prepararemos su orden, agradeceremos su espera.</p>
-            <a href='${pageContext.servletContext.contextPath}/Principal' class="btn btn-primary">Ir a inicio</a>
+            <a href='${pageContext.servletContext.contextPath}/Ordenes' class="btn btn-primary">Ver mis ordenes </a>
         </div>
     </div>
 </div>
@@ -52,7 +52,7 @@
         let comidasArray = JSON.parse(localStorage.getItem("comidasArray"))
         
         if(comidasArray == null) {
-            if(sessionStorage.getItem('isOrdered') === null){
+            if(true){
                 sendDataButton.style = 'display: none'
                 tabla_body.innerHTML = '<tr><td colspan="5">No hay datos</td></tr>'
             }else{                
@@ -103,7 +103,7 @@
             }
         }
 
-        let values = comidasArray.comidas
+        let values = comidasArray.comidas //hacer url con los parametros
                 .map(item => {
                     return 'idcomidas=' + item.id + '&cantidades=' + item.cantidad + '&precios=' + item.precio + '&subtotales=' + (item.cantidad * item.precio)
                 })

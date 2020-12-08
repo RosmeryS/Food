@@ -65,20 +65,17 @@ public class Menus extends HttpServlet {
                     "LEFT JOIN menu b ON a.idpadre = b.idmenu;";
                 rs = Operaciones.consultar(sql, params);
                 
-                cabeceras = new String[]{"ID", "Menú", "Descripción", "Padre", "Ícono"};
+                cabeceras = new String[]{"ID", "Menú", "Descripción", "URL", "Padre", "Ícono"};
                 Tabla tab = new Tabla(rs, //array quecontiene los datos
                         "50%", //ancho de la tabla px | % 
                         Tabla.STYLE.TABLE01, //estilo de la tabla
                         Tabla.ALIGN.LEFT, // alineacion de la tabla
                         cabeceras);
-                tab.setEliminable(true);//boton actualizar
                 tab.setModificable(true); //url del proyecto
                 tab.setPageContext(request.getContextPath());//pagina encargada de eliminar
-                tab.setPaginaEliminable(servlet+"?accion=eliminar");//pagina encargada de actualizacion
                 tab.setPaginaModificable(servlet+"?accion=modificar");//pagina encargada de seleccion para operaciones
                 tab.setPaginaSeleccionable(servlet+"?accion=modificar");//icono para modificar y eliminar
                 tab.setIconoModificable("/iconos/edit.png");
-                tab.setIconoEliminable("/iconos/delete.png"); //columnas seleccionables
                 tab.setColumnasSeleccionables(new int[]{1});//pie de tabla
                 tab.setPie("Resultado "+servlet_name);
                 
@@ -95,7 +92,9 @@ public class Menus extends HttpServlet {
                 
                 int id = Integer.parseInt(request.getParameter("id"));
                 Menu v = Operaciones.get(id, new Menu());
-                Menu p = Operaciones.get(v.getIdpadre(), new Menu());
+                Menu p = null;
+                if(v.getIdpadre() != null)
+                    p = Operaciones.get(v.getIdpadre(), new Menu());
                 request.setAttribute("valor", v);
                 request.setAttribute("p", p);
                 
@@ -110,7 +109,29 @@ public class Menus extends HttpServlet {
                 Comida v = Operaciones.eliminar(id, new Comida());
                 
                 request.getSession().setAttribute("resultado", 1);
-                response.sendRedirect(servlet);
+                response.sendRedirect("Menus");
+                
+                Operaciones.commit();
+            }else if(accion.equals("padres")){
+                Operaciones.iniciarTransaccion();
+                
+                sql = "SELECT idmenu, menu, url FROM Menu WHERE idpadre IS NULL;";
+                rs = Operaciones.consultar(sql, params);
+                cabeceras = new String[]{"ID", "Menu", "Descripcion"};
+                Tabla tab = new Tabla(rs, //array quecontiene los datos
+                        "50%", //ancho de la tabla px | % 
+                        Tabla.STYLE.TABLE01, //estilo de la tabla
+                        Tabla.ALIGN.LEFT, // alineacion de la tabla
+                        cabeceras);
+                tab.setFilaSeleccionable(true);
+                tab.setMetodoFilaSeleccionable("_Seleccionar_");
+                tab.setPageContext(request.getContextPath());//pagina encargada de eliminar
+                tab.setPie("Resultado "+servlet_name);
+                
+                String tabla01 = tab.getTabla();
+                request.setAttribute("tabla", tabla01);
+                request.setAttribute("seleccionar", "padre");
+                request.getRequestDispatcher(servlet_name+"/padres.jsp").forward(request, response);
                 
                 Operaciones.commit();
             }
@@ -118,7 +139,7 @@ public class Menus extends HttpServlet {
             try {
                 Operaciones.rollback();
                 request.getSession().setAttribute("resultado", 0);
-                response.sendRedirect(servlet);
+                response.sendRedirect("Menus");
             } catch (SQLException ex1) {
                 Logger.getLogger(Menus.class.getName()).log(Level.SEVERE, null, ex1);
             }
@@ -134,11 +155,12 @@ public class Menus extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String idcomida = request.getParameter("idcomida");
+        String idmenu = request.getParameter("idmenu");
         String menu = request.getParameter("menu");
-        String precio = request.getParameter("precio");
         String descripcion = request.getParameter("descripcion");
-        String imagen_url = request.getParameter("imagen_url");
+        String url = request.getParameter("url");
+        String idpadre = request.getParameter("idpadre");
+        String icono = request.getParameter("icono");
         
         try{
             Conexion conn = new ConexionPool();
@@ -146,18 +168,19 @@ public class Menus extends HttpServlet {
             Operaciones.abrirConexion(conn);
             Operaciones.iniciarTransaccion();
             
-            Comida c = new Comida();
-            c.setMenu(menu);
-            c.setPrecio(new BigDecimal(precio));
-            c.setDescripcion(descripcion);
-            c.setImagen_url(imagen_url);
+            Menu m = new Menu();
+            m.setMenu(menu);
+            m.setDescripcion(descripcion);
+            m.setUrl(url);
+            if(idpadre != null && !idpadre.isEmpty()) m.setIdpadre(Integer.parseInt(idpadre));
+            m.setIcono(icono);
             
-            if(idcomida != null && !idcomida.equals("")){
-                c.setIdcomida(Integer.parseInt(idcomida));
+            if(idmenu != null && !idmenu.equals("")){
+                m.setIdmenu(Integer.parseInt(idmenu));
                 
-                c = Operaciones.actualizar(Integer.parseInt(idcomida), c);
+                m = Operaciones.actualizar(Integer.parseInt(idmenu), m);
             }else{
-                c = Operaciones.insertar(c);
+                m = Operaciones.insertar(m);
             }
             
             request.getSession().setAttribute("resultado", 1);
@@ -172,7 +195,7 @@ public class Menus extends HttpServlet {
         }finally{
             try {
                 Operaciones.cerrarConexion();
-                response.sendRedirect("Comidas");
+                response.sendRedirect("Menus");
             } catch (SQLException ex) {
                 Logger.getLogger(Menus.class.getName()).log(Level.SEVERE, null, ex);
             }

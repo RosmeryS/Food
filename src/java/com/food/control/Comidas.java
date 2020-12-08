@@ -96,7 +96,7 @@ public class Comidas extends HttpServlet {
                 Comida v = Operaciones.eliminar(id, new Comida());
                 
                 request.getSession().setAttribute("resultado", 1);
-                response.sendRedirect(servlet);
+                response.sendRedirect("Comidas");
                 
                 Operaciones.commit();
             }
@@ -104,7 +104,7 @@ public class Comidas extends HttpServlet {
             try {
                 Operaciones.rollback();
                 request.getSession().setAttribute("resultado", 0);
-                response.sendRedirect(servlet);
+                response.sendRedirect("Comidas");
             } catch (SQLException ex1) {
                 Logger.getLogger(Comidas.class.getName()).log(Level.SEVERE, null, ex1);
             }

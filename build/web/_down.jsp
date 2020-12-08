@@ -26,13 +26,14 @@
                 </div>
             </div>
         </div>
-        <div class="footer-copyright text-center py-3">
-            <p><b>© 2019 Copyright: Vaco_Meralgo, LLC.</b> <br>
-                Todos los derechos reservados. El nombre Vaco_Meralgo, <br>
+       <div class="footer-copyright text-center py-3">
+           <p><b>© 2020 Copyright: Food & Drink</b> <br>
+                Todos los derechos reservados. El nombre Food & Drink, <br>
                 logos, imágenes y marcas relacionadas son marcas registradas <br>
-                de Vaco_Meralgo, Inc.  <br>
-                S.A. de C.V. para El Salvador.
+                de Food & Drink.  <br>
+                S.A. de C.V. El Salvador.
             </p>
+ 
         </div>
     </footer>
 </div>

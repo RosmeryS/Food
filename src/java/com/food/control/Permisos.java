@@ -31,6 +31,11 @@ public class Permisos extends HttpServlet {
             request.setAttribute("resultado", resultado);
             request.getSession().removeAttribute("resultado");
         }
+        Integer idrol = (Integer)request.getSession().getAttribute("idrol");
+        if(idrol != null){
+            request.setAttribute("idrol", resultado);
+            request.getSession().removeAttribute("idrol");
+        }
         
         String accion = request.getParameter("accion") != null ? request.getParameter("accion") : "";
         
@@ -51,7 +56,7 @@ public class Permisos extends HttpServlet {
             if(accion.equals("")){
                 Operaciones.iniciarTransaccion();
                 
-                Integer idrol = request.getParameter("idrol") != null ? Integer.parseInt(request.getParameter("idrol")) : null;
+                if(idrol == null) idrol = request.getParameter("idrol") != null ? Integer.parseInt(request.getParameter("idrol")) : null;
                 request.setAttribute("idrol", idrol);
                 
                 if(idrol != null){
@@ -61,8 +66,8 @@ public class Permisos extends HttpServlet {
                         "		WHEN b.idmenu IS NULL THEN '-'\n" +
                         "		WHEN b.idmenu IS NOT NULL THEN b.menu\n" +
                         "	END AS padre,\n" +
-                        "	(SELECT COUNT(*) FROM permiso p WHERE p.idmenu = a.idmenu AND p.idrol = ?) AS ischecked\n" +
-                        "FROM menu a\n" +
+                        "	(SELECT COUNT(*) FROM permiso p WHERE p.idmenu = a.idmenu AND p.idrol = ?) AS ischecked,\n" +
+                        "a.idmenu FROM menu a\n" +
                         "LEFT JOIN menu b ON a.idpadre = b.idmenu;";
                     params.add(idrol);
                     rs = Operaciones.consultar(sql, params);
@@ -75,6 +80,7 @@ public class Permisos extends HttpServlet {
                             p.setUrl(rs[1][i]);
                             p.setPadre(rs[2][i]);
                             p.setIschecked(Integer.parseInt(rs[3][i]));
+                            p.setIdmenu(Integer.parseInt(rs[4][i]));
                             Permisos.add(p);
                         }
                         
@@ -131,11 +137,9 @@ public class Permisos extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String idcomida = request.getParameter("idcomida");
-        String menu = request.getParameter("menu");
-        String precio = request.getParameter("precio");
-        String descripcion = request.getParameter("descripcion");
-        String imagen_url = request.getParameter("imagen_url");
+        String idrol = request.getParameter("idrol");
+        String[] idmenus = request.getParameterValues("idmenus");
+        String[] checkeds = request.getParameterValues("checkeds");
         
         try{
             Conexion conn = new ConexionPool();
@@ -143,19 +147,7 @@ public class Permisos extends HttpServlet {
             Operaciones.abrirConexion(conn);
             Operaciones.iniciarTransaccion();
             
-            Comida c = new Comida();
-            c.setMenu(menu);
-            c.setPrecio(new BigDecimal(precio));
-            c.setDescripcion(descripcion);
-            c.setImagen_url(imagen_url);
             
-            if(idcomida != null && !idcomida.equals("")){
-                c.setIdcomida(Integer.parseInt(idcomida));
-                
-                c = Operaciones.actualizar(Integer.parseInt(idcomida), c);
-            }else{
-                c = Operaciones.insertar(c);
-            }
             
             request.getSession().setAttribute("resultado", 1);
             Operaciones.commit();
@@ -169,7 +161,8 @@ public class Permisos extends HttpServlet {
         }finally{
             try {
                 Operaciones.cerrarConexion();
-                response.sendRedirect("Comidas");
+                request.getSession().setAttribute("idrol", idrol);
+                response.sendRedirect("Permisos");
             } catch (SQLException ex) {
                 Logger.getLogger(Permisos.class.getName()).log(Level.SEVERE, null, ex);
             }

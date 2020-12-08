@@ -39,14 +39,16 @@
                             <div class="col-3">
                                 <p class="mb-0"><i class="fas fa-map-marked-alt"></i> ${i.direccion}</p>
                             </div>
-                            <div class="col-2">
-                                <a href="#" onclick="cambiarEstado(${i.idorden}, 'Enviada');" class="btn btn-info ${i.estado == "Enviada" || i.estado == "Entregada" || i.estado == "Cancelada" ? "disabled" : ""}"  data-toggle="tooltip" data-placement="top" title="Enviar"> <i class="fas fa-truck"></i>  </a>
-                                <a href="#" onclick="cambiarEstado(${i.idorden}, 'Entregada');" class="btn btn-success ${i.estado == "Pendiente" || i.estado == "Entregada" || i.estado == "Cancelada" ? "disabled" : ""}"  data-toggle="tooltip" data-placement="top" title="Entregada"> <i class="fas fa-check-circle"></i>  </a>
-                                <a href="#" onclick="cambiarEstado(${i.idorden}, 'Cancelada');" class="btn btn-danger ${i.estado == "Enviada" || i.estado == "Entregada" || i.estado == "Cancelada"  ? "disabled" : ""}"  data-toggle="tooltip" data-placement="top" title="Cancelar"> <i class="fas fa-window-close"></i>  </a>
-                                <a target="_blank" href="${pageContext.servletContext.contextPath}/Reportes?accion=factura&id=${i.idorden}" class="btn btn-danger"  data-toggle="tooltip" data-placement="top" title="Factura"> <i class="fas fa-print"></i>  </a>
-                                <a href="" class="btn btn-primary"  data-toggle="tooltip" data-placement="top" title="Editar"> <i class="fas fa-edit"></i>  </a>
-                                <a href="" class="btn btn-danger"  data-toggle="tooltip" data-placement="top" title="Eliminar"> <i class="fas fa-trash"></i>  </a>
-                            </div>
+                            <c:if test="${disable == null}">
+                                <div class="col-2">
+                                    <a href="#" onclick="cambiarEstado(${i.idorden}, 'Enviada');" class="btn btn-info ${i.estado == "Enviada" || i.estado == "Entregada" || i.estado == "Cancelada" ? "disabled" : ""}"  data-toggle="tooltip" data-placement="top" title="Enviar"> <i class="fas fa-truck"></i>  </a>
+                                    <a href="#" onclick="cambiarEstado(${i.idorden}, 'Entregada');" class="btn btn-success ${i.estado == "Pendiente" || i.estado == "Entregada" || i.estado == "Cancelada" ? "disabled" : ""}"  data-toggle="tooltip" data-placement="top" title="Entregada"> <i class="fas fa-check-circle"></i>  </a>
+                                    <a href="#" onclick="cambiarEstado(${i.idorden}, 'Cancelada');" class="btn btn-danger ${i.estado == "Enviada" || i.estado == "Entregada" || i.estado == "Cancelada"  ? "disabled" : ""}"  data-toggle="tooltip" data-placement="top" title="Cancelar"> <i class="fas fa-window-close"></i>  </a>
+                                    <a target="_blank" href="${pageContext.servletContext.contextPath}/Reportes?accion=factura&id=${i.idorden}" class="btn btn-danger"  data-toggle="tooltip" data-placement="top" title="Factura"> <i class="fas fa-print"></i>  </a>
+                                    <a href="" class="btn btn-primary"  data-toggle="tooltip" data-placement="top" title="Editar"> <i class="fas fa-edit"></i>  </a>
+                                    <a href="" class="btn btn-danger"  data-toggle="tooltip" data-placement="top" title="Eliminar"> <i class="fas fa-trash"></i>  </a>
+                                </div>
+                            </c:if>
                             <div class="col-2">
                                 <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse${i.idorden}" aria-expanded="true" aria-controls="collapseOne">
                                     Detalles <i class="fas fa-caret-down"></i>
@@ -77,11 +79,11 @@
     })
 </script>
 <script>
-    function limpiarFiltros(){
-        
-        location.href = "${pageContext.servletContext.contextPath}${servlet}"
+    function limpiarFiltros() {
+
+        location.href = "${pageContext.servletContext.contextPath}${servlet}" //PRINCIPAL sin parametros
     }
-    function cambiarEstado(id, estado) {
+    function cambiarEstado(id, estado) { //AJAX
         const xhr = new XMLHttpRequest()
 
         xhr.onload = function () {

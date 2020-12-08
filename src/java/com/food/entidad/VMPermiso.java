@@ -1,12 +1,14 @@
 package com.food.entidad;
 
 public class VMPermiso {
+    private int idmenu;
     private int ischecked;
     private String menu;
     private String url;
     private String padre;
 
-    public VMPermiso(int ischecked, String menu, String url, String padre) {
+    public VMPermiso(int idmenu, int ischecked, String menu, String url, String padre) {
+        this.idmenu = idmenu;
         this.ischecked = ischecked;
         this.menu = menu;
         this.url = url;
@@ -14,6 +16,14 @@ public class VMPermiso {
     }
 
     public VMPermiso() {
+    }
+
+    public int getIdmenu() {
+        return idmenu;
+    }
+
+    public void setIdmenu(int idmenu) {
+        this.idmenu = idmenu;
     }
 
     public int getIschecked() {

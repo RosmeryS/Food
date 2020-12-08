@@ -113,7 +113,7 @@
                                         <button type="submit" class="buttons btn btn-success" name="btnEntrar"> Entrar</button>
                                     </div>
                                     <div class="modal-footer">
-                                        <p><a href="HTML/formCuenta.html"> Crear Cuenta </a></p>
+                                        <p><a href="formCuenta.jsp"> Crear Cuenta </a></p>
                                     </div>
                                 </form>
                                 </section>

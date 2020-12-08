@@ -32,7 +32,7 @@
 </div>
 <script>
     function addToCart(id, menu, precio, descripcion, imagen_url){
-        if(sessionStorage.getItem('isOrdered') == null){
+        if(true){
             let comida = {
                 "id": id,
                 "menu": menu,

@@ -19,12 +19,11 @@
         <div class="form-group">
             <label for="url">URL</label>
             <input class="form-control" readonly="" id="url" name="url" value="${valor.url}" type="text">
-        </div>
-        <div class="form-group">
-            <label for="idpadre">Padre</label>
-            <input class="form-control col-2" readonly="" id="idpadre" name="idpadre" value="${valor.idpadre}" type="text">
-            <input class="form-control col-6" readonly="" id="padre" name="padre" value="${p.menu}" type="text">
-            <button class="button">...</button>
+        </div>        
+        <div class="form-row mb-3">
+            <label class="col-12" for="idpadre">Padre</label>
+            <div class="col"><input id="idpadre" name="idpadre" value="${p != null ? valor.idpadre : ""}" readonly type="text" class="form-control"></div>
+            <div class="col-7"><input id="padre" name="padre" value="${p != null ? p.menu : ""}" readonly type="text" class="form-control"></div>
         </div>
         <div class="form-group">
             <label for="icono">Ícono</label>
@@ -34,4 +33,10 @@
         <a class="btn btn-danger" href="${pageContext.servletContext.contextPath}${servlet}">Cancelar</a>
     </form>
 </div>
+        <script>
+            function setDataPadre(idpadre, padre){
+                document.getElementById("idpadre").value = idpadre;
+                document.getElementById("padre").value = padre;
+            }
+        </script>
 <%@include file="../_down.jsp" %>

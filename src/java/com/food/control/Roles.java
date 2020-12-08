@@ -96,7 +96,7 @@ public class Roles extends HttpServlet {
                 com.food.entidad.Roles v = Operaciones.eliminar(id, new com.food.entidad.Roles());
                 
                 request.getSession().setAttribute("resultado", 1);
-                response.sendRedirect(servlet);
+                response.sendRedirect("Roles");
                 
                 Operaciones.commit();
             }
@@ -104,7 +104,7 @@ public class Roles extends HttpServlet {
             try {
                 Operaciones.rollback();
                 request.getSession().setAttribute("resultado", 0);
-                response.sendRedirect(servlet);
+                response.sendRedirect("Roles");
             } catch (SQLException ex1) {
                 Logger.getLogger(Roles.class.getName()).log(Level.SEVERE, null, ex1);
             }

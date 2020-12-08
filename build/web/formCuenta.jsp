@@ -1,4 +1,3 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,9 +8,9 @@
         <link rel="shortcut icon" href="Imagenes/Food_Drink.png">
         <link rel="stylesheet" href="CSS/style.css">
         <link rel="stylesheet" href="CSS/formCuenta.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+        <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" >
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -35,7 +34,7 @@
                         <a class= "nav-link" href= "HTML/comida.html"> <i class="fas fa-utensils"> Comidas </i></a> 
                     </li>
                     <li class= "nav-item" > 
-                        <a class= "nav-link" href= "HTML/conocenos.html"> <i class="fas fa-book"> Con√≥cenos... </i></a> 
+                        <a class= "nav-link" href= "HTML/conocenos.html"> <i class="fas fa-book"> ConÛcenos... </i></a> 
                     </li>  
                     <li class="nav-item">
                         <a class="nav-link" href="HTML/carretilla.html"><i class="fas fa-shopping-cart"> Carrito</i></a>
@@ -52,18 +51,18 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Iniciar Sesi√≥n</h4>
+                            <h4 class="modal-title">Iniciar SesiÛn</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <div class="modal-body">
                             <form>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1"> Direcci√≥n de correo:</label>
+                                    <label for="exampleInputEmail1"> DirecciÛn de correo:</label>
                                     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Alicia@gmail.com">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1"> Contrase√±a: </label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contrase√±a">
+                                    <label for="exampleInputPassword1"> ContraseÒa: </label>
+                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="ContraseÒa">
                                 </div>
                                 <div id="enviar">
                                     <button type="submit" class="btn btn-success"> Entrar</button>
@@ -83,50 +82,42 @@
             </div>
             <div class="main-body">
                 <div class="row">
-                    <form class="divForm col-md-6" method="POST" action="crearUsuario">
+                    <form class="divForm col-md-6" method="POST" action="Usuarios?accion=crearCuenta">
                         <hr>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="txtNombre">Nombre:</label>
-                                <input type="email" class="form-control" id="txtNombre" name="txtNombre" placeholder="Ju√°n Luis">
+                                <label for="tidusuario">Usuario:</label>
+                                <input type="text" class="form-control" id="tidusuario" name="tidusuario" placeholder="Ju·n Luis">
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="txtApellido">Apellido:</label>
-                                <input type="password" class="form-control" id="txtApellido" name="txtApellido" placeholder="Guerra Solis">
+                                <label for="nombre">Nombre:</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ju·n Luis">
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="txtCorreo">Correo:</label>
-                                <input type="email" class="form-control" id="txtCorreo" name="txtCorreo" placeholder="Usuario@gmail.com">
+                                <label for="apellido">Apellido:</label>
+                                <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Guerra Solis">
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="txtContrase√±a">Contrase√±a:</label>
-                                <input type="password" class="form-control" id="txtContrase√±a" name="txtContrase√±a" placeholder="Contrase√±a">
+                                <label for="email">Correo:</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Usuario@gmail.com">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="clave">ContraseÒa:</label>
+                                <input type="password" class="form-control" id="clave" name="tclave" placeholder="ContraseÒa">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="txtDireccion">Direcci√≥n:</label>
-                            <input type="text" class="form-control" id="txtDireccion" name="txtDireccion" placeholder="1234 Lomas de San Antonio">
+                            <label for="direccion">DirecciÛn:</label>
+                            <input type="text" class="form-control" id="direccion" name="direccion" placeholder="1234 Lomas de San Antonio">
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-5">
-                                <label for="datepicker">Fecha de Nacimiento:</label>
-                                <input id="datepicker" name="datepicker" placeholder="11/23/2019">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="Departamento">Departamento:</label>
-                                <select id="Departamento" class="form-control">
-                                    <option selected>Ahuachap√°n</option>
-                                    <option selected>Sonsonate</option>
-                                    <option selected>Santa Ana</option>
-                                    <option selected>La Libertad</option>
-                                    <option selected>Caba√±as</option>
-                                    <option selected>San Salvador</option>
-                                    <option selected>Elegir...</option>
-                                </select>
+                                <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento">
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="txtTelefono">Tel√©fono:</label>
-                                <input type="text" class="form-control" id="txtTelefono" name="txtTelefono" placeholder="71594358">
+                                <label for="telefono">TelÈfono:</label>
+                                <input type="text" class="form-control" id="telefono" name="telefono" placeholder="71594358">
                             </div>
                         </div>
                         <div class="form-group">
@@ -144,7 +135,7 @@
                     <div class="anuncio col-md-6">
                         <h3>Con tu cuenta puedes...</h3>
                         <div class="anuncioInterno">
-                            <p><i class="fas fa-sync-alt"></i> Tener acceso f√°cil y r√°pido a tu historial de ordenes</p>
+                            <p><i class="fas fa-sync-alt"></i> Tener acceso f·cil y r·pido a tu historial de ordenes</p>
                             <p><i class="fas fa-search-location"></i> Rastrear tu orden en tiempo real</p>
                             <p><i class="fas fa-exclamation-circle"></i> Disfrutar de promociones exclusivas para usuarios registrados</p>
                         </div>
@@ -179,9 +170,9 @@
             </div>
         </div>
         <div class="footer-copyright text-center py-3">
-            <p><b>¬© 2020 Copyright: Food & Drink</b> <br>
+            <p><b>© 2020 Copyright: Food & Drink</b> <br>
                 Todos los derechos reservados. El nombre Food & Drink, <br>
-                logos, im√°genes y marcas relacionadas son marcas registradas <br>
+                logos, im·genes y marcas relacionadas son marcas registradas <br>
                 de Food & Drink.  <br>
                 S.A. de C.V. El Salvador.
             </p>

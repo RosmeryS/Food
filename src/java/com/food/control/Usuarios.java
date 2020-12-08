@@ -104,11 +104,11 @@ public class Usuarios extends HttpServlet {
             }else if(accion.equals("eliminar")){
                 Operaciones.iniciarTransaccion();
                 
-                int id = Integer.parseInt(request.getParameter("id"));
+                String id = request.getParameter("id");
                 com.food.entidad.Usuarios v = Operaciones.eliminar(id, new com.food.entidad.Usuarios());
                 
                 request.getSession().setAttribute("resultado", 1);
-                response.sendRedirect(servlet);
+                response.sendRedirect("Usuarios");
                 
                 Operaciones.commit();
             }else if(accion.equals("rol")){
@@ -138,7 +138,7 @@ public class Usuarios extends HttpServlet {
             try {
                 Operaciones.rollback();
                 request.getSession().setAttribute("resultado", 0);
-                response.sendRedirect(servlet);
+                response.sendRedirect("Usuarios");
             } catch (SQLException ex1) {
                 Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex1);
             }
@@ -154,6 +154,7 @@ public class Usuarios extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String accion = request.getParameter("accion");
         String idusuario = request.getParameter("tidusuario");
         String nombre = request.getParameter("nombre");
         String apellido = request.getParameter("apellido");
@@ -162,7 +163,7 @@ public class Usuarios extends HttpServlet {
         String email = request.getParameter("email");
         String fecha_nacimiento = request.getParameter("fecha_nacimiento");
         String clave = request.getParameter("tclave");
-        String idrol = request.getParameter("idrol");
+        String idrol = request.getParameter("idrol") == null ? "2" : "1";
         
         try{
             Conexion conn = new ConexionPool();
@@ -193,6 +194,13 @@ public class Usuarios extends HttpServlet {
                     v.setClave(Hash.generarHash(clave, Hash.SHA256));
                 v = Operaciones.insertar(v);
             }
+            if(accion != null){
+                if(accion.equals("crearCuenta")){
+                    response.sendRedirect("Login");
+                }
+            }else{
+                response.sendRedirect("Usuarios");
+            }
             
             request.getSession().setAttribute("resultado", 1);
             Operaciones.commit();
@@ -206,7 +214,6 @@ public class Usuarios extends HttpServlet {
         }finally{
             try {
                 Operaciones.cerrarConexion();
-                response.sendRedirect("Usuarios");
             } catch (SQLException ex) {
                 Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
             }

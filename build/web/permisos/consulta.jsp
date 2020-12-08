@@ -5,6 +5,7 @@
     <div class="tabla container-fluid p-5">
         <%@include file="../_message.jsp" %>
         <h1 class="mb-1">Lista de ${servlet_name}</h1>
+        <button  class="btn btn-primary">Guardar cambios</button>
         <nav class="navbar navbar-light bg-light mb-2">
             <form id="form" accept-charset="UTF-8" class="form-inline" action="${pageContext.servletContext.contextPath}${servlet}" method="GET">
                 <select class="form-control mr-sm-2" name="idrol" id="idrol">
@@ -31,7 +32,7 @@
                 </c:if>
                 <c:forEach var="i" items="${PermisosList}">
                     <tr>
-                        <td><input type="checkbox" ${i.ischecked == 1 ? "checked" : ""}></td>
+                        <td><input id="${i.idmenu}" class="check" type="checkbox" ${i.ischecked == 1 ? "checked" : ""}></td>
                         <td>${i.menu}</td>
                         <td>${i.url}</td>
                         <td>${i.padre}</td>

@@ -46,7 +46,7 @@ public class Principal extends HttpServlet {
                     List<Menu> sms = new ArrayList();
                     fm.setMenu_principal(m);
                     for(Menu sm: Submenus){
-                        if(sm.getIdpadre() == m.getIdMenu()) sms.add(sm);
+                        if(sm.getIdpadre() == m.getIdmenu()) sms.add(sm);
                     }
                     fm.setSub_menus(sms);
                     FullMenus.add(fm);

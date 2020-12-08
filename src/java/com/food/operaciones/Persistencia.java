@@ -79,7 +79,7 @@ public class Persistencia extends ManejadorSentencias {
                     } else {
                         Field field = entity.getClass().getDeclaredField(fs[i].getName());
                         field.setAccessible(true);
-                        System.out.println(valor);
+                        //System.out.println(valor);
                         if (valor instanceof Long) {
                             valor = Integer.parseInt(valor.toString());
                         }

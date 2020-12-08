@@ -90,7 +90,10 @@ public class Ordenes extends HttpServlet {
                             "WHERE a.idUsuario = b.idUsuario";
                         if(usuario != null && usuario != "") sql += " AND CONCAT(b.nombre, ' ', b.apellido) LIKE '%"+usuario+"%'";
                         if(estado != null && !estado.equals("0")) sql += " AND a.estado = '"+estado+"'";
-                        if(idrol != 1) sql += " AND a.idUsuario = '"+idusuario+"'";
+                        if(idrol != 1) {
+                            sql += " AND a.idUsuario = '"+idusuario+"'";
+                            request.setAttribute("disable", true);
+                        }
                         
                         rs = Operaciones.consultar(sql, params);
                         

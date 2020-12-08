@@ -15,8 +15,8 @@ public class Menu {
     public Menu() {
     }
 
-    public Menu(int idMenu, String menu, String descripcion, String url, Integer idpadre, String icono) {
-        this.idmenu = idMenu;
+    public Menu(int idmenu, String menu, String descripcion, String url, Integer idpadre, String icono) {
+        this.idmenu = idmenu;
         this.menu = menu;
         this.descripcion = descripcion;
         this.url = url;
@@ -24,12 +24,12 @@ public class Menu {
         this.icono = icono;
     }
 
-    public int getIdMenu() {
+    public int getIdmenu() {
         return idmenu;
     }
 
-    public void setIdMenu(int idMenu) {
-        this.idmenu = idMenu;
+    public void setIdmenu(int idmenu) {
+        this.idmenu = idmenu;
     }
 
     public String getMenu() {
@@ -56,7 +56,7 @@ public class Menu {
         this.url = url;
     }
 
-    public int getIdpadre() {
+    public Integer getIdpadre() {
         return idpadre;
     }
 
