@@ -6,7 +6,7 @@
     <form class="mw-100 w-50" action="${pageContext.servletContext.contextPath}${servlet}" method="POST">
         <div class="form-group w-25">
             <label for="idusuario">ID</label>
-            <input class="form-control" ${block_id == "true" ? "readonly" : ""} id="idusuario" name="tidusuario" value="${valor.idUsuario}" type="text">
+            <input placeholder="Alicia.Perez" class="form-control" ${block_id == "true" ? "readonly" : ""} id="idusuario" name="tidusuario" value="${valor.idUsuario}" type="text">
         </div>
         <c:if test="${valor != null}">
             <div class="form-row mb-3 align-items-center">
@@ -30,23 +30,23 @@
         </c:if>
         <div class="form-group">
             <label for="nombre">Nombres</label>
-            <input class="form-control" id="nombre" name="nombre" value="${valor.nombre}" type="text">
+            <input placeholder="Alicia Margarita" class="form-control" id="nombre" name="nombre" value="${valor.nombre}" type="text">
         </div>
         <div class="form-group">
             <label for="apellido">Apellidos</label>
-            <input class="form-control" id="apellido" name="apellido" value="${valor.apellido}" type="text">
+            <input placeholder="Perez Nolasco" class="form-control" id="apellido" name="apellido" value="${valor.apellido}" type="text">
         </div>
         <div class="form-group">
             <label for="telefono">Teléfono</label>
-            <input class="form-control" id="telefono" name="telefono" value="${valor.telefono}" type="text">
+            <input placeholder="77889999" class="form-control" id="telefono" name="telefono" value="${valor.telefono}" type="text">
         </div>
         <div class="form-group">
             <label for="direccion">Dirección</label>
-            <input class="form-control" id="direccion" name="direccion" value="${valor.direccion}" type="text">
+            <input placeholder="Urbanizacion Valle Bonito" class="form-control" id="direccion" name="direccion" value="${valor.direccion}" type="text">
         </div>
         <div class="form-group">
             <label for="email">Email</label>
-            <input class="form-control" id="email" name="email" value="${valor.email}" type="text">
+            <input placeholder="alyciaa@gmail.com" class="form-control" id="email" name="email" value="${valor.email}" type="text">
         </div>
         <div class="form-group">
             <label for="fecha_nacimiento">Fecha de nacimiento</label>
