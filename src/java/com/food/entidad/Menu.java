@@ -5,19 +5,18 @@ import com.food.anotaciones.*;
 @Entity (table = "Menu")
 public class Menu {
     @PrimaryKey
-    @AutoIncrement
-    private int idMenu;
+    private int idmenu;
     private String menu;
     private String descripcion;
     private String url;
-    private int idpadre;
+    private Integer idpadre;
     private String icono;
 
     public Menu() {
     }
 
-    public Menu(int idMenu, String menu, String descripcion, String url, int idpadre, String icono) {
-        this.idMenu = idMenu;
+    public Menu(int idMenu, String menu, String descripcion, String url, Integer idpadre, String icono) {
+        this.idmenu = idMenu;
         this.menu = menu;
         this.descripcion = descripcion;
         this.url = url;
@@ -26,11 +25,11 @@ public class Menu {
     }
 
     public int getIdMenu() {
-        return idMenu;
+        return idmenu;
     }
 
     public void setIdMenu(int idMenu) {
-        this.idMenu = idMenu;
+        this.idmenu = idMenu;
     }
 
     public String getMenu() {
@@ -61,7 +60,7 @@ public class Menu {
         return idpadre;
     }
 
-    public void setIdpadre(int idpadre) {
+    public void setIdpadre(Integer idpadre) {
         this.idpadre = idpadre;
     }
 

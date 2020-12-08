@@ -1,5 +1,6 @@
 package com.food.entidad;
 
+import com.food.anotaciones.AutoIncrement;
 import com.food.anotaciones.Entity;
 import com.food.anotaciones.PrimaryKey;
 
@@ -7,6 +8,7 @@ import com.food.anotaciones.PrimaryKey;
 @Entity(table = "Roles")
 public class Roles {
     @PrimaryKey
+    @AutoIncrement
     private int idRol;
     private String rol;
 

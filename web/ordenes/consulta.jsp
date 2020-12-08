@@ -43,6 +43,7 @@
                                 <a href="#" onclick="cambiarEstado(${i.idorden}, 'Enviada');" class="btn btn-info ${i.estado == "Enviada" || i.estado == "Entregada" || i.estado == "Cancelada" ? "disabled" : ""}"  data-toggle="tooltip" data-placement="top" title="Enviar"> <i class="fas fa-truck"></i>  </a>
                                 <a href="#" onclick="cambiarEstado(${i.idorden}, 'Entregada');" class="btn btn-success ${i.estado == "Pendiente" || i.estado == "Entregada" || i.estado == "Cancelada" ? "disabled" : ""}"  data-toggle="tooltip" data-placement="top" title="Entregada"> <i class="fas fa-check-circle"></i>  </a>
                                 <a href="#" onclick="cambiarEstado(${i.idorden}, 'Cancelada');" class="btn btn-danger ${i.estado == "Enviada" || i.estado == "Entregada" || i.estado == "Cancelada"  ? "disabled" : ""}"  data-toggle="tooltip" data-placement="top" title="Cancelar"> <i class="fas fa-window-close"></i>  </a>
+                                <a target="_blank" href="${pageContext.servletContext.contextPath}/Reportes?accion=factura&id=${i.idorden}" class="btn btn-danger"  data-toggle="tooltip" data-placement="top" title="Factura"> <i class="fas fa-print"></i>  </a>
                                 <a href="" class="btn btn-primary"  data-toggle="tooltip" data-placement="top" title="Editar"> <i class="fas fa-edit"></i>  </a>
                                 <a href="" class="btn btn-danger"  data-toggle="tooltip" data-placement="top" title="Eliminar"> <i class="fas fa-trash"></i>  </a>
                             </div>
